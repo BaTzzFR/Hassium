@@ -1,0 +1,194 @@
+* {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  background-image: url(../img/bg2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+button {
+  background-color: lightseagreen;
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0px 5px 5px lightseagreen;
+  transition: 0.5s ease-out;
+}
+button:not([disabled]):hover,
+button:not([disabled]):focus {
+  background-color: orange;
+  color: white;
+  box-shadow: 0px 5px 5px orange;
+  transform: scale(0.95, 0.95);
+}
+#panel {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0 20px;
+  height: 100vh;
+  clip-path: polygon(0 0, 100% 0%, 95% 100%, 0 100%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  min-width: 33vw;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  right: 0;
+  background-color: #fefefe;
+  width: 33%;
+  height: 100vh;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s;
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: lightseagreen;
+  color: white;
+}
+
+.modal-body {
+  padding: 16px 16px;
+}
+
+select {
+  padding: 10px;
+  border: none;
+  border-bottom: 3px lightseagreen solid;
+  border-radius: 3px;
+  outline: none;
+}
+
+@keyframes slideIn {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+  to {
+    right: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.progress {
+  background-color: #d8d8d8;
+  position: fixed;
+  height: 30px;
+  width: 100vw;
+  bottom: 0;
+}
+
+.progress-done {
+  background: linear-gradient(to left, #ff0000, #ff9900);
+  box-shadow: 0 3px 3px -5px #f2709c, 0 2px 5px #f2709c;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 0;
+  opacity: 0;
+  transition: 1s ease 0.3s;
+}
+
+#snackbar {
+  visibility: hidden;
+  width: 10vw;
+  background-color: white;
+  color: black;
+  border-top: 5px orange solid;
+  box-shadow: 0px 2px 5px orange;
+  text-align: center;
+  border-radius: 4px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  margin-left: 45vw;
+}
+#snackbar.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
