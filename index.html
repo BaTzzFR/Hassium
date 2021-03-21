@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="asset/toast.css"/>
+    <script src="asset/toast.js"></script>
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="from">
+        <h1>Hassium</h1>
+        <input type="text" placeholder="Email" id="username">
+        <input type="password" placeholder="Password" id="password">
+        <button id="play">Play</button>
+        <h3 id="console"></h3>
+      </div>
+    </div>
+    <script>
+      const ipc = require("electron").ipcRenderer;
+      const custombar = require("custom-electron-titlebar");
+
+      let playbtn = document.getElementById("play");
+
+      let bar = new custombar.Titlebar({
+        menu: null,
+        icon: "asset/logo.ico",
+        backgroundColor: custombar.Color.fromHex("#333"),
+      });
+
+      playbtn.addEventListener("click", () => {
+        playbtn.disabled = true;
+
+        let user = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+
+        if (user && pass) {
+          ipc.send("login", { user, pass });
+        } else {
+          playbtn.disabled = false;
+          iziToast.error({
+            id: "error",
+            title: "Erreur",
+            message: "Veuillez entrer des identifiants",
+            position: "bottomRight",
+            transitionIn: "fadeInDown",
+          });
+        }
+      });
+
+      ipc.on("err", (event, errorMessage) => {
+        localStorage.clear();
+        iziToast.error({
+          id: "error",
+          title: "Erreur",
+          message: errorMessage,
+          position: "bottomRight",
+          transitionIn: "fadeInDown",
+        });
+        playbtn.disabled = false;
+      });
+
+      playbtn.addEventListener('click',()=>{
+      if(inputPseudo.value && inputMdp.value){
+        playbtn.disabled = true
+        playbtn.innerHTML = 'Lancement en cours...'
+        ipc.send('login',{user:inputPseudo.value,pass:inputMdp.value})
+      } else {
+        snack('Veuillez entrer des identifiants')
+        }
+      });
+
+    ipc.on('err',(evt,txt)=>{
+      playbtn.disabled = false;
+      playbtn.innerHTML = 'Connexion'
+      snack(txt)
+    })
+
+    if (localStorage.getItem('user')) {
+      ipc.send('loginToken', JSON.parse(localStorage.getItem('user')));
+    }
+    </script>
+    <style>
+      /* fonts */
+      @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+      /* index.html */
+      * {
+          font-family: 'Roboto';
+      }
+
+      body {
+          color: white;
+          margin: 0;
+          padding: 0;
+          background: url('asset/background.png');
+          background-size: cover;
+      }
+
+      .from {
+          width: 300px;
+          padding: 40px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          background: #333;
+          text-align: center;
+          border-radius: 15px;
+      }
+
+      .from h1 {text-transform: uppercase;}
+
+      .from input[type = "text"],.from input[type = "password"] {
+          border: 0;
+          background: none;
+          display: block;
+          margin: 20px auto;
+          text-align: center;
+          border: 2px solid white;
+          padding: 14px 10px;
+          width: 200px;
+          outline: none;
+          color: white;
+          border-radius: 24px;
+          transition: 0.25s;
+      }
+
+      .from input[type = "text"]:focus,.from input[type = "password"]:focus {width: 280px;}
+
+      .from button {
+          border: 0;
+          background: none;
+          display: block;
+          margin: 20px auto;
+          text-align: center;
+          border: 2px solid greenyellow;
+          padding: 14px 50px;
+          width: 200px;
+          outline: none;
+          color: white;
+          border-radius: 24px;
+          transition: 0.25s;
+      }
+
+      .from button:hover {
+          background: greenyellow;
+          color: black;
+      }
+
+      #snackbar {
+        visibility: hidden;
+        min-width: 200px;
+        background-color: white;
+        color: black;
+        border-top: 5px orange solid;
+        box-shadow: 0px 2px 5px orange;
+        text-align: center;
+        border-radius: 4px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        bottom: 30px;
+      }
+      #snackbar.show {
+        visibility: visible;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="box">
+        <img src="https://minotar.net/avatar/MHF_Steve/100.png" id="skin" class="skin"/><br/>
+        Bienvenue <b id="pseudo">Inconnu</b>
+        <h1>Lancement de<br/>Hassium...</h1>
+        <img src="asset/loading.gif" class="loading">
+    </div>
+<script>
+    const ipc = require("electron").ipcRenderer;
+    const custombar = require("custom-electron-titlebar");
+
+    let bar = new custombar.Titlebar({
+        menu: null,
+        icon: "asset/logo.ico",
+        backgroundColor: custombar.Color.fromHex("#333"),
+    });
+
+    let skin = document.getElementById("skin");
+    let pseudo = document.getElementById("pseudo");
+
+    ipc.on('user', (evt, user) => {
+        pseudo.innerHTML = user.name;
+        skin.src = `https://minotar.net/avatar/${user.name}/100.png`;
+        localStorage.setItem('user', JSON.stringify(user));
+    });
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+
+    body {
+        font-family: 'Roboto';
+        background: url('asset/background.png');
+        background-size: cover;
+        color: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .box {
+        width: 300px;
+        padding: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background: #333;
+        text-align: center;
+        border-radius: 15px;
+    }
+
+    .skin {
+        border-radius: 15px;
+    }
+
+    .loading {
+        width: 125px;
+    }
+</style>
+</body>
+</html>

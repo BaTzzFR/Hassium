@@ -1,0 +1,40 @@
+{
+  "name": "hassium",
+  "version": "1.0.0",
+  "description": "Launcher Hassium",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "author": "BaTzzFR",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^9.0.0",
+    "electron-builder": "^22.10.5",
+    "electron-forge": "^5.2.4",
+    "electron-packager": "^11.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "custom-electron-titlebar": "^3.2.2-hotfix62",
+    "minecraft-launcher-core": "^3.14.1",
+    "package": "^1.0.1"
+  },
+  "build": {
+    "appId": "fr.batzzfr.hassium",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "asset/logo.ico"
+    },
+    "nsis": {
+      "installerIcon": "asset/logo.ico",
+      "uninstallerIcon": "asset/logo.ico",
+      "uninstallDisplayName": "Hassium",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
