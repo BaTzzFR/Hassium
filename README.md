@@ -1,4 +1,1 @@
-git clone https://github.com/BaTzzFR/Hassium.git
-cd Hassium
-npm install
-npm run start
+https://b5e592a184e4.ngrok.io/hassium
