@@ -1,5 +1,4 @@
 const { app, ipcMain, BrowserWindow } = require("electron");
-const ipc = require("electron").ipcRenderer;
 const path = require("path");
 const { Client, Authenticator } = require("minecraft-launcher-core");
 const launcher = new Client();
