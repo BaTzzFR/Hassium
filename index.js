@@ -1,10 +1,10 @@
 const { app, ipcMain, BrowserWindow } = require("electron");
+const ipc = require("electron").ipcRenderer;
 const path = require("path");
 const { Client, Authenticator } = require("minecraft-launcher-core");
 const launcher = new Client();
 
 let mainWindow;
-let child;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -36,27 +36,28 @@ app.on("window-all-closed", function () {
 ipcMain.on('login',(evt,data)=>{
   Authenticator.getAuth(data.user, data.pass)
     .then((user) => {
+      let appdata = app.getPath("appData");
       let opts = {
         clientPackage: "https://b5e592a184e4.ngrok.io/hassium/assets/modpacks.zip",
         authorization: Authenticator.getAuth(data.user, data.pass),
-        root: "./.hassium",
+        root: `${appdata}/.hassium`,
         version: {
-            number: "1.16.5",
+            number: "1.8.9",
             type: "release"
         },
-        forge: "./.hassium/forge.jar",
+        forge: `${appdata}/.hassium/forge.jar`,
         memory: {
             max: "6G",
             min: "1G"
         }
       }
+
       mainWindow.loadURL(path.join(__dirname, 'app.html')).then(() => {
         mainWindow.webContents.send('user', user);
       });
 
       launcher.launch(opts);
 
-      launcher.on('debug', (e) => console.log(e));
       launcher.on('data', (e) => console.log(e));
       launcher.on('progress', (e) => console.log(e));
     })
@@ -64,3 +65,5 @@ ipcMain.on('login',(evt,data)=>{
   evt.sender.send('err', 'Mauvais identifiants');
  });
 });
+
+launcher.on('close', (e) => app.quit());

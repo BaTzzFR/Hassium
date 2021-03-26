@@ -19,7 +19,8 @@
     "axios": "^0.21.1",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "minecraft-launcher-core": "^3.14.1",
-    "package": "^1.0.1"
+    "package": "^1.0.1",
+    "update-electron-app": "^2.0.1"
   },
   "build": {
     "appId": "fr.batzzfr.hassium",
