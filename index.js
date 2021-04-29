@@ -37,7 +37,7 @@ ipcMain.on('login',(evt,data)=>{
     .then((user) => {
       let appdata = app.getPath("appData");
       let opts = {
-        clientPackage: "https://b5e592a184e4.ngrok.io/hassium/assets/modpacks.zip",
+        clientPackage: "https://www.lesnomades59.fr/hassium/modpacks.zip",
         authorization: Authenticator.getAuth(data.user, data.pass),
         root: `${appdata}/.hassium`,
         version: {
